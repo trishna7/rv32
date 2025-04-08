@@ -1,8 +1,3 @@
-/*
- * Copyright (c) 2024 Your Name
- * SPDX-License-Identifier: Apache-2.0
- */
-
 `default_nettype none
 
 module tt_um_trishna_test (
@@ -28,12 +23,10 @@ module tt_um_trishna_test (
     .spi_cs(uio_out[0]),
     .spi_sck(uio_out[3]),
     .spi_mosi(uio_out[1]),
-    .spi_miso(uio_out[2])
-);
-
-
+    .spi_miso(uio_in[2])  // Fixed: Use uio_in[1] for spi_miso
+  );
 
   // List all unused inputs to prevent warnings
-  wire _unused = &{ena, clk, rst_n, 1'b0};
+  wire _unused = &{ena, clk, rst_n, uio_in[2], uio_in[4:2], uio_in[7:5], 1'b0};
 
 endmodule

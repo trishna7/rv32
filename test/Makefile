@@ -5,7 +5,7 @@
 SIM ?= icarus
 TOPLEVEL_LANG ?= verilog
 SRC_DIR = $(PWD)/../src
-PROJECT_SOURCES = tt_um_trishna_test.v, ALU_Decoder.v, ALU.v, Control_Unit.v, Data_Memory.v, Immediate.v, Instruction_Memory.v, PC.v, Register.v, UART_RX.v, UART_TX.v
+PROJECT_SOURCES = tt_um_trishna_test.v Processor.v ALU_Decoder.v ALU.v Control_Unit.v Data_Memory.v immediate.v Instruction_Memory.v PC.v Registers.v UART_RX.v UART_TX.v
 
 ifneq ($(GATES),yes)
 
@@ -33,12 +33,21 @@ endif
 # Allow sharing configuration between design and testbench via `include`:
 COMPILE_ARGS 		+= -I$(SRC_DIR)
 
-# Include the testbench sources:
+# Include the Verilog testbench (wrapper):
 VERILOG_SOURCES += $(PWD)/tb.v
 TOPLEVEL = tb
 
 # MODULE is the basename of the Python test file
 MODULE = test
+
+# Configure Cocotb to use the VCD file name from tb.v
+export COCOTB_HDL_VCD_FILE = tb.vcd
+
+# Check if cocotb-config is available
+COCOTB_CONFIG := $(shell which cocotb-config)
+ifeq ($(COCOTB_CONFIG),)
+$(error cocotb-config not found. Please install Cocotb or add it to your PATH)
+endif
 
 # include cocotb's make rules to take care of the simulator setup
 include $(shell cocotb-config --makefiles)/Makefile.sim

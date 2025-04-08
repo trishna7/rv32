@@ -17,11 +17,11 @@ module tb ();
   reg clk;
   reg rst_n;
   reg ena;
+  reg [7:0] ui_in;
   reg [7:0] uio_in;
+  wire [7:0] uo_out;
+  wire [7:0] uio_out;
   wire [7:0] uio_oe;  
-
-  reg uart_rx, spi_miso;
-  wire uart_tx, spi_cs, spi_sck, spi_mosi;
 
 `ifdef GL_TEST
   wire VPWR = 1'b1;
@@ -37,14 +37,22 @@ module tb ();
       .VGND(VGND),
 `endif
 
-      .ui_in  ({uart_rx, 7'b0}),    // Dedicated inputs
-      .uo_out ({7'b0, uart_tx}),   // Dedicated outputs
-      .uio_in (uio_in),   // IOs: Input path
-      .uio_out(4'b0, spi_sck, spi_miso, spi_mosi, spi_cs),  // IOs: Output path
-      .uio_oe (uio_oe),   // IOs: Enable path (active high: 0=input, 1=output)
-      .ena    (ena),      // enable - goes high when design is selected
-      .clk    (clk),      // clock
-      .rst_n  (rst_n)     // not reset
+      .ui_in  (ui_in),      // Dedicated inputs
+      .uo_out (uo_out),     // Dedicated outputs
+      .uio_in (uio_in),     // IOs: Input path
+      .uio_out(uio_out),    // IOs: Output path
+      .uio_oe (uio_oe),     // IOs: Enable path (active high: 0=input, 1=output)
+      .ena    (ena),        // enable - goes high when design is selected
+      .clk    (clk),        // clock
+      .rst_n  (rst_n)       // not reset
   );
+
+  // Signal mappings
+  wire uart_tx = uo_out[0];
+  wire spi_cs = uio_out[0];
+  wire spi_mosi = uio_out[1];
+  wire spi_sck = uio_out[3];
+  wire uart_rx = ui_in[7];
+  wire spi_miso = uio_in[2];
 
 endmodule
