@@ -48,7 +48,7 @@ module Processor (
         .clk(clk), .reset(reset), .data_in(tx_data), .tx_start(tx_start), .uart_tx(uart_tx), .tx_busy(tx_busy)
     );
 
-    always @(posedge clk or posedge reset) begin
+    always @(posedge clk) begin
         if (reset) begin
             prog_mode <= 1;
             prog_state <= 0;
