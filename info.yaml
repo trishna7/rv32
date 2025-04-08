@@ -17,7 +17,19 @@ project:
   # Source files must be in ./src and you must list each source file separately, one per line.
   # Don't forget to also update `PROJECT_SOURCES` in test/Makefile.
   source_files:
-    - "tt_um_trishna_test.v Processor.v ALU_Decoder.v ALU.v Control_Unit.v Data_Memory.v immediate.v Instruction_Memory.v PC.v Registers.v UART_RX.v UART_TX.v"
+    - "tt_um_trishna_test.v" 
+    - "Processor.v" 
+    - "ALU_Decoder.v"
+    - "ALU.v"
+    - "Control_Unit.v"
+    - "Data_Memory.v"
+    - "immediate.v"
+    - "Instruction_Memory.v"
+    - "PC.v"
+    - "Registers.v"
+    - "UART_RX.v"
+    - "UART_TX.v"
+
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 # This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
@@ -45,7 +57,7 @@ pinout:
   # Bidirectional pins
   uio[0]: "spi_cs"
   uio[1]: "spi_mosi"
-  uio[2]: ""
+  uio[2]: "spi_miso"
   uio[3]: "spi_sck"
   uio[4]: ""
   uio[5]: ""
